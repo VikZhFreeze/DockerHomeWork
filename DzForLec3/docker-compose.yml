@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  app:
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    image: app_dzlec3.1.0
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "1024M"
+    ports:
+      - "80:80"
+    container_name: app
