@@ -1,0 +1,21 @@
+version: '2.4'
+services:
+  nginx-dz4:
+    build:
+      context: ./
+      dockerfile: nginx-dz4.Dockerfile
+    image: nginx-dz4.1.0
+    container_name: nginx-dz4
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-dz4.conf:/etc/nginx/sites-available/nginx-dz4.conf
+    depends_on:
+      - dz4
+
+  dz4:
+    build: 
+      context: ./
+      dockerfile: dz4.Dockerfile
+    image: app_dzlec4.1.0
+    container_name: dz4

@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  nginx-dz4:
+    image: nginx-dz4.1.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3  
+    ports:
+      - "80:80"
+    environment:
+      TZ: "Europe/Moscow"
+    depends_on:
+      - dz4
+    configs:
+      - source: nginx-dz4.conf
+        target: /etc/nginx/sites-available/nginx-dz4.conf
+
+  dz4:
+    image: app_dzlec4.1.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:    
+      TZ: "Europe/Moscow"
+    
+configs:
+  nginx-dz4.conf:
+    file: nginx-dz4.conf
