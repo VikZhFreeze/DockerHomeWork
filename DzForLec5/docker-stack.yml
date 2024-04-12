@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  nginx-dz5:
+    image: nginx-dz5.1.0
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3  
+    ports:
+      - "80:80"
+    environment:
+      TZ: "Europe/Moscow"
+    depends_on:
+      - dz5
+    configs:
+      - source: nginx-dz5.conf
+        target: /etc/nginx/sites-available/nginx-dz5.conf
+
+  dz5:
+    image: app_dzlec5.1.0
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    environment:    
+      TZ: "Europe/Moscow"
+    
+configs:
+  nginx-dz5.conf:
+    file: nginx-dz5.conf

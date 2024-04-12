@@ -1,0 +1,21 @@
+version: '2.4'
+services:
+  nginx-dz5:
+    build:
+      context: ./
+      dockerfile: nginx-dz5.Dockerfile
+    image: nginx-dz5.1.0
+    container_name: nginx-dz5
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx-dz5.conf:/etc/nginx/sites-available/nginx-dz5.conf
+    depends_on:
+      - dz5
+
+  dz5:
+    build: 
+      context: ./
+      dockerfile: dz5.Dockerfile
+    image: app_dzlec5.1.0
+    container_name: dz5
